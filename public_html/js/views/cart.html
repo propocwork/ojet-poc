@@ -1,0 +1,56 @@
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<div id="cartContent" class="oj-web-applayout-content">
+    <h1>Your Cart </h1>
+
+    <div class="oj-panel">
+        <a href class="oj-flex-item oj-padding pull-right" id="buttonIcon2" data-bind="click: $parent.navigateToView.bind(null, 'product')">
+            <i class="fa fa-plus-circle"></i> Add more products</a>
+
+        <div class="oj-header-border"><h2>Items</h2></div>
+
+        <table class="oj-table  oj-table-grid-display text-left" width="100%">
+            <thead class=" oj-table-header">
+                <tr class="oj-table-header-row">
+                    <th class="oj-table-column-header oj-table-column-header-cell" width="200"><strong>Product Name</strong></th>
+                    <th class="oj-table-column-header oj-table-column-header-cell"><strong>Ratings</strong></th>
+                    <th class="oj-table-column-header oj-table-column-header-cell text-center" width="8%"><strong>Qty</strong></th>
+                    <th class="oj-table-column-header oj-table-column-header-cell text-right"><strong class="oj-padding-end">Price</strong></th>
+                    <th class="oj-table-column-header oj-table-column-header-cell text-right"><strong class="oj-padding-end">Sub Total</strong></th>
+                </tr>
+            </thead>
+            <tbody class="oj-table-body">                
+                <!-- ko foreach: cartDataList -->
+                <tr class="oj-table-body-row">                
+                    <td class="oj-table-data-cell"><span class="oj-text-sm oj-padding" data-bind="text: name"></span><div class="text-center oj-padding"><img height="100" class="img" data-bind="attr: {src: thumb_image}" /></div></td>
+                    <td class="oj-table-data-cell"><oj-rating-gauge style="width:70px; height:20px;" value="[[ratings]]" readonly></oj-rating-gauge></td>
+                    <td class="oj-table-data-cell text-center cart-qty-links"><a href="javascript:void(0)" data-bind="click: $parent.decrementQty"><i class="fa fa-minus"></i></a> <input style="width:25px;" type="text" name="txtCartQty" class="oj-sm-12 oj-md-12 text-center" data-bind="value: qty" /> <a href="javascript:void(0)" data-bind="click: $parent.incrementQty"><i class="fa fa-plus"></i></a> </td>               
+                    <td class="oj-table-data-cell text-right"><span data-bind="text: currency_symbol+''+price"></span></td>
+                    <td class="oj-table-data-cell text-right"><span class="oj-padding-end" data-bind="text: currency_symbol+''+subTotal()"></span></td>
+                </tr>
+            <!-- /ko -->
+            </tbody>
+            <tfoot class="oj-table-footer">
+                <tr class="oj-table-footer-row">
+                    <td class="oj-table-footer-cell text-right" colspan="4"><strong>Total:</strong></td>
+                    <td class="oj-table-footer-cell text-right"><span class="oj-padding-end" data-bind="text: cartTotal().cur+''+cartTotal().amt() "></span></td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div> <!-- /oj-panel end -->
+    
+    <div class="oj-panel oj-margin-vertical">
+        <div class="oj-flex">
+            <div class="oj-flex-item oj-flex-items-pad text-right">
+                <oj-button class="oj-button-lg oj-button-confirm">Proceed to Checkout</oj-button>
+            </div>
+        </div>        
+    </div>
+    
+</div>
+

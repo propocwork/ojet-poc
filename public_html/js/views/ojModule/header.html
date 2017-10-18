@@ -1,0 +1,45 @@
+<!-- Template for rendering navigation items shared between nav bar and nav list -->
+<script type="text/html" id="navTemplate">
+    <li><a href="#">
+            <span data-bind="css: $data['iconClass']"></span>
+            <!-- ko text: $data['name'] --> <!--/ko-->
+        </a></li>
+</script>
+
+
+<header id="headerContent" role="banner" class="oj-web-applayout-header">
+    <div class="oj-web-applayout-max-width oj-flex-bar oj-sm-align-items-center">
+        <!-- Offcanvas toggle button -->
+        <div class="oj-flex-bar-start oj-md-hide">
+            <oj-button id="drawerToggleButton" class="oj-button-lg" on-click="[[toggleDrawer]]" chroming="half" display="icons">
+                <span slot="startIcon" class="oj-web-applayout-offcanvas-icon"></span>
+                <span>Application Navigation</span>
+            </oj-button>
+        </div>
+        <div class="oj-flex-bar-start oj-sm-align-items-baseline">        
+            <h1 title="Application Name"><a href="javascript:void(0);" data-bind="text: appName" ></a></h1>
+        </div>
+        <div class="oj-flex-bar-end oj-end ">
+        <oj-button data-bind="{css: {'oj-md-hide oj-sm-hide': $parent.cartCount() < 1}, click: $parent.navigateToView.bind(null,'cart')}"><i class="fa fa-cart-plus"></i>Cart <span data-bind="text: cartItemsCount"><span></oj-button>
+</div>
+
+</div>
+<div role="navigation" class="oj-web-applayout-max-width oj-web-applayout-navbar">
+    <oj-navigation-list id="navList" class="oj-sm-only-hide oj-md-condense oj-md-justify-content-flex-end"
+                        data="[[navDataSource]]"
+                        edge="top"
+                        item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('navTemplate', true)]]"
+                        selection="{{$parent.router.stateId}}">
+    </oj-navigation-list>
+</div>
+</header>
+
+
+<div id="navDrawer" role="navigation" class="oj-contrast-marker oj-web-applayout-offcanvas oj-offcanvas-start">
+    <oj-navigation-list data="[[navDataSource]]"
+                        edge="start"
+                        item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('navTemplate', true)]]"
+                        on-click="[[toggleDrawer]]"
+                        selection="{{$parent.router.stateId}}">
+    </oj-navigation-list>
+    </div>

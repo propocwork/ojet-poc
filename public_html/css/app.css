@@ -1,0 +1,21 @@
+/*
+    Document   : override
+    Created on : <date>
+    Author     : <author>
+    Description:
+        This is where any of your application specific styles should be included
+*/
+
+a:focus{outline:none;}
+
+.text-center{text-align: center !important;}
+.text-left{text-align: left !important;}
+.text-right{text-align: right !important;}
+
+.cart-qty-links a{
+    color:#666666;
+    font-weight:normal;
+    text-shadow:none;
+    font-size:12px;
+    margin:0 4px;
+}
