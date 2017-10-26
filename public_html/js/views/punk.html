@@ -1,0 +1,59 @@
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<h1>Punk</h1>
+
+
+<!-- ko if: loaderFlag() -->
+    <h5 class="italic text-center">Please wait... We are fetching beers for you! </h5>
+    <oj-progress id="progressBar"  style="height: 10px;" value="{{progressValue}}"></oj-progress>
+<!-- /ko -->
+
+<!-- ko if: promiseFailed() -->
+    <h2 class="italic text-center">Sorry!!</h2>
+    <h5 class="italic text-center" id="promiseFailedText"></h5>
+<!-- /ko -->
+
+<!-- ko if: loaderFlag()!==true && promiseFailed()!==true -->
+
+    <div class="oj-margin-vertical oj-flex-bar">
+        <input class="oj-flex-bar-middle oj-padding oj-md-6 oj-sm-6" id="searchInput" data-bind="value:searchValue, valueUpdate: 'keyup'" placeholder="Search beer..." />
+    </div>
+
+    <div id="masonryLayout" class="oj-flex" data-bind="template: {name: 'beerTemplate', foreach:beers}"></div>
+
+    <script type="text/html" id="beerTemplate">
+        <a href data-bind="click: $parent.openBeerDetailView">
+            <div class="oj-panel oj-flex-item plunk-bottles text-center">
+                <strong class="clearfix" data-bind="text: name"></strong>
+                <img data-bind="attr: {src: image_url, alt: name}" width="100" class="img" />
+            </div>
+        </a>
+    </script>
+    
+    <div id="dialogWrapper">
+        <oj-dialog style="display:none;width: 50vw; height: 50vh;" id="punkDetailDialog" 
+                   title="" modality="modal">
+            <span slot="header" data-bind="text: dialogDetails().name"></span>
+            <div slot="body">
+                <div class="oj-flex">
+                    <div class="oj-flex-item oj-md-10"></div>
+                    <div class="oj-flex-item oj-md-2">
+                        <img data-bind="attr: {src: dialogDetails().image_url}"/>
+                    </div>
+                </div>
+            </div>
+
+            <div slot="footer" class="text-center">
+                <oj-button id="okButton" data-bind="click: handleOKClose"> 
+                    OK
+                </oj-button>
+            </div>
+        </oj-dialog>
+    </div>
+<!-- /ko -->
+
+

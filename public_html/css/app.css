@@ -8,6 +8,15 @@
 
 a:focus{outline:none;}
 
+.clearfix{
+    overflow: hidden;
+    clear:both;
+}
+.clearfix:after, .clearfix:before{   
+    content: ' ';
+    display:block;
+}
+
 .text-center{text-align: center !important;}
 .text-left{text-align: left !important;}
 .text-right{text-align: right !important;}
@@ -19,3 +28,12 @@ a:focus{outline:none;}
     font-size:12px;
     margin:0 4px;
 }
+
+.plunk-bottles{margin-right:10px; margin-bottom: 10px; padding:10px;}
+.plunk-bottles strong{
+    display: block;
+    margin-bottom: 10px;
+}
+
+.oj-progress-bar{margin:10px 10px 10px 0;}
+.oj-progress-bar-value{background: #ff8282;}
