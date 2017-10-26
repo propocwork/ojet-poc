@@ -4,9 +4,9 @@
 -->
 <div class="oj-hybrid-padding" id="productPageContent">
     <div id="listviewContainer" >
-        <h1>Products</h1>
+        <h1>Products</h1>   
 
-        <div  id="productListView" role="main" class="oj-md-web-padding-horizontal oj-component">
+        <div  id="productListView" role="main" class="oj-component">
             <oj-list-view id="listview" 
                           class="oj-listview-card-layout" 
                           aria-label="list with card layout for items in group"
@@ -17,19 +17,18 @@
         </div>
 
         <script type="text/html" id="item_template">
-            <li>
-                
+            <li>                
                 <a href="#" data-bind="click: $parent.goToProductDetail">
-                    <img data-bind="attr: {src: thumb_image}"
-                     width="100%" alt="thumbnail image" /><strong data-bind="text: name"></strong></a>
-                
+                    <img data-bind="attr: {src: thumb_image}" width="100%" alt="thumbnail image" />
+                    <strong data-bind="text: name"></strong>
+                </a>
 
-                <h4 data-bind="text: currency_symbol+price"></h4>
+                <h3 class="bold" data-bind="text: currency_symbol+price"></h3>
             </li>
             </script>
 
             <div id="producDetailView" class="oj-sm-hide oj-md-hide">
-                
+
                 <div class="oj-flex-bar oj-flex oj-flex-items-pad">
                     <a href="#" class="oj-flex-item oj-padding" id="buttonIcon2" data-bind="click: goToProductList">
                         <span slot="startIcon" class="fa fa-arrow-left"></span> Back
@@ -46,7 +45,7 @@
                         <p><strong>Color:</strong> <span data-bind="text: productDetailContent().color"></span></p>
                         <p><strong>Ratings:</strong><oj-rating-gauge style="display:inline-block; height: 16px;" value="[[productDetailContent().ratings]]" readonly></oj-rating-gauge></p>
                         <p><strong>Product detail:</strong> <span data-bind="text: productDetailContent().description"></span></p>
-                        
+
                         <oj-button data-bind="css: {'oj-md-hide oj-sm-hide': addedToCartFlag}" class="oj-button-primary oj-button-lg" on-click="[[addToCart]]"><i class="fa fa-plus fa-lg"></i>Buw Now</oj-button>
                         <!-- ko if: addedToCartFlag -->
                         <oj-button class="oj-button-text-only oj-button-lg" data-bind="click: $parent.navigateToView.bind(null,'cart')"><i class="fa fa-cart-plus fa-lg ton-label"></i>Go to Cart</oj-button>

@@ -31,6 +31,7 @@ requirejs.config(
     'customElements': 'libs/webcomponents/custom-elements.min',
     'proj4': 'libs/proj4js/dist/proj4-src',
     'underscore': 'libs/underscore/underscore.min',
+    'services': 'viewModels/services',
     'css': 'libs/require-css/css'
   }
   //endinjector

@@ -15,7 +15,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
                 self.router.configure({
                     'product': {label: 'Product', isDefault: true},
                     'about': {label: 'About'},
-                    'cart': {label: 'Cart'}
+                    'cart': {label: 'Cart'},
+                    'punk': {label: 'Punk'}
                 });
                 oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
 
