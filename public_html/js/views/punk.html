@@ -33,7 +33,7 @@ and open the template in the editor.
     </script>
     
     <div id="dialogWrapper">
-        <oj-dialog initial-visibility="hide" style="width: 50vw; height: 50vh;" id="punkDetailDialog" 
+        <oj-dialog initial-visibility="hide" style="width: 50vw; height: 75vh;" id="punkDetailDialog" 
                    title="" modality="modal" cancel-behaviour="icon" resize-behavior="none">
             <span slot="header" data-bind="text: beerDetails().name + ' - ' + beerDetails().tagline"></span>
             <div slot="body">
@@ -75,7 +75,7 @@ and open the template in the editor.
                         <div class="oj-flex oj-margin-bottom">
                             <div class="oj-flex-item"><strong>Brewers Tips:</strong> <span class="oj-flex-item" data-bind="text: beerDetails().brewers_tips"></span></div>
                         </div>
-                        <div class="oj-flex oj-margin-bottom">
+                        <div class="oj-flex">
                             <div class="oj-flex-item"><strong>Contributed By:</strong> <span class="oj-flex-item" data-bind="text: beerDetails().contributed_by"></span></div>
                         </div>                        
                     </div>
@@ -85,8 +85,8 @@ and open the template in the editor.
                 </div>
             </div>
 
-            <div slot="footer" class="text-center">
-                <oj-button id="okButton" data-bind="click: handleOKClose"> 
+            <div slot="footer" class="text-center oj-dialog-footer">
+                <oj-button class="oj-button-primary" id="okButton" data-bind="click: handleOKClose"> 
                     OK
                 </oj-button>
             </div>

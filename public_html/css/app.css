@@ -37,3 +37,14 @@ a:focus{outline:none;}
 
 .oj-progress-bar{margin:10px 10px 10px 0;}
 .oj-progress-bar-value{background: #ff8282;}
+
+.oj-dialog{border:1px solid black;}
+.oj-dialog-header{background: #FFE24F;}
+.oj-dialog-header-close-wrapper.oj-button.oj-hover .oj-button-button{
+    border-color: #c4ced7;
+    background-color: black;
+}
+.oj-dialog-header-close-wrapper.oj-button.oj-hover .oj-button-button .oj-button-icon{
+    color:#fff;
+}
+.oj-dialog-footer{display:block;}
