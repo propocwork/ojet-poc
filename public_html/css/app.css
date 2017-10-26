@@ -48,3 +48,16 @@ a:focus{outline:none;}
     color:#fff;
 }
 .oj-dialog-footer{display:block;}
+
+
+/* Main layout styles*/
+.oj-web-applayout-content {
+    padding-bottom: 40px;
+}
+.oj-web-applayout-footer {
+    position: fixed;
+    bottom:0;
+    width:100%;
+    min-height: 30px;
+    padding-top: 6px;
+}

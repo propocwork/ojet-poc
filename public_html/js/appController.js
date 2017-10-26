@@ -13,10 +13,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
                 // Router setup
                 self.router = oj.Router.rootInstance;
                 self.router.configure({
-                    'product': {label: 'Product', isDefault: true},
+                    'punk': {label: 'Punk', isDefault: true},
+                    'product': {label: 'Product'},
                     'about': {label: 'About'},
-                    'cart': {label: 'Cart'},
-                    'punk': {label: 'Punk'}
+                    'cart': {label: 'Cart'}
                 });
                 oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
 

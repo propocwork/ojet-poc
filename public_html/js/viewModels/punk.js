@@ -86,14 +86,33 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'services/punkService'
                         vm.beers([]);                        
                         
                         //console.log('if length greater than 2');
-                        //console.log('bArray value now ',bArray);
+                        //console.clear();
+                        //console.log('value ',value);
+                        
+                        var notFoundBeer = false;
                         
                         for (var x in bArray) {
 
+                            console.log(bArray[x].name.toLowerCase().indexOf(value.toLowerCase()));
+                            
                             if (bArray[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-                                vm.beers.push(bArray[x]);
+//                                console.log('Beer found!',bArray[x]);
+
+                                vm.beers.push(bArray[x]);                                
+                            }
+                            else{
+                                notFoundBeer = true;
                             }
                         }
+                        
+                        // Need flag setting in loop causes functionaility breaks                        
+                        if(notFoundBeer) {
+//                            console.log('Beer not found!');
+                            //If beer not found in search list push dummy beer object                                
+                            vm.beers.push(pServiceInstance.dummyBeerObj);
+                            return false;
+                        }
+                        
                         
                     }else{
                         //console.log('inside else ', bArray);

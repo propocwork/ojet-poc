@@ -61,9 +61,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojoffcanvas', 'ojs/ojnavigationlist', 'oj
 
         // Navigation setup
         var navData = [
-            {name: 'Product', id: 'product', iconClass: 'oj-navigationlist-item-icon'},
-            {name: 'About', id: 'about', iconClass: 'oj-navigationlist-item-icon'},
-            {name: 'Punk beer', id: 'punk', iconClass: 'oj-navigationlist-item-icon'}
+            {name: 'Punk beer', id: 'punk', iconClass: 'oj-navigationlist-item-icon'},
+            {name: 'Apparels', id: 'product', iconClass: 'oj-navigationlist-item-icon'},
+            {name: 'About', id: 'about', iconClass: 'oj-navigationlist-item-icon'}
         ];
         self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
 
