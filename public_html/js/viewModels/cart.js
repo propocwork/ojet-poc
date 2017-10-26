@@ -9,17 +9,14 @@
 /**
  * cart module
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'ojs/ojrouter', 'ojs/ojgauge',
-    'ojs/ojtable',
-    'ojs/ojarraytabledatasource'],
-        function (oj, ko, $, _) {
+define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'appController', 'viewModels/product', 'ojs/ojrouter', 'ojs/ojgauge',
+    'ojs/ojtable', 'ojs/ojdialog', 'ojs/ojarraytabledatasource'],
+        function (oj, ko, $, _, cVM, pVM) {
             /**
              * The view model for the main content view template
              */
             function cartContentViewModel() {
                 var vm = this;
-
-                var rootVM = ko.dataFor(document.getElementById('pageContent'));
 
                 vm.cartDataList = ko.observableArray();
                 vm.cartTotal = ko.observable({
@@ -28,125 +25,136 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'ojs/ojrouter', 'ojs/o
                 });
                 vm.intTotalVal = ko.observable(0);
 
-                //If page refereshed re-directed back to product page and element not found or null
-                if (document.getElementById('productPageContent') === null) {
-                    rootVM.router.go('/');
-                } else {
+                var prodVM = pVM;
+                var getUniqCartRecords = [];
 
-                    var prodVM = ko.dataFor(document.getElementById('productPageContent'));
-                    var getUniqCartRecords = [];
+                vm.cartDialogOKHandle = cartDialogOKHandle;
+                vm.cartDialogCloseListner = cartDialogCloseListner;
+                vm.updateCartDataSource = [];
+                vm.incrementQty = incrementQty;
+                vm.decrementQty = decrementQty;
+                vm.productCounts = ko.observable("");
+
+                //reset flags for product view
+                prodVM.addedToCartFlag(false);
+
+                //console.info('cartData length', cVM.cartData().length);
+
+                if (cVM.cartData().length === 0) {
+                    setTimeout(function () {
+                        document.querySelector('#cartInfoDialog').open();
+                    }, 0);
+                }else{
+                    setTimeout(function () {
+                        $('#cartContainer').css({display: 'block'});
+                    }, 0);
+                }
 
 
-                    vm.updateCartDataSource = [];
-                    vm.incrementQty = incrementQty;
-                    vm.decrementQty = decrementQty;
-                    vm.productCounts = ko.observable("");
+                if (cVM.cartData().length !== 0) {
+                    
+                    vm.productCounts(_.countBy(cVM.cartData(), function (obj) {
+                        return obj.name;
+                    }));
 
-                    //reset flags for product view
-                    prodVM.addedToCartFlag(false);
+//                  console.info(cVM.cartData());
 
-                    if (rootVM.cartData().length !== 0) {
+                    getUniqCartRecords = _.uniq(cVM.cartData(), function (item, key, a) {
+                        item['ratings'] = +(item['ratings']);
+                        item['price'] = parseFloat(item['price']).toFixed(2);
+                        item['qty'] = ko.observable(vm.productCounts()[item.name]);
+                        item['subTotal'] = ko.observable(item.price);
+                        return item.id;
+                    });
 
-                        vm.productCounts(_.countBy(rootVM.cartData(), function (obj) {
-                            return obj.name;
-                        }));
+//                    console.info(getUniqCartRecords);
 
-                        console.info(rootVM.cartData());
-//                        console.info(vm.productCounts());
+                    //update cart data list
+                    vm.cartDataList(getUniqCartRecords);
 
-//                console.log('updated cartData Records',rootVM.cartData());                    
+                    //update cart count based on number of items in cart
+                    cVM.cartCount(getUniqCartRecords.length);
 
-                        getUniqCartRecords = _.uniq(rootVM.cartData(), function (item, key, a) {
-                            item['ratings'] = +(item['ratings']);
-                            item['price'] = parseFloat(item['price']).toFixed(2);
-                            item['qty'] = ko.observable(vm.productCounts()[item.name]);
-                            item['subTotal'] = ko.observable(item.price);
-                            return item.id;
+                    //calculate cart total
+                    vm.cartTotal = ko.computed(function () {
+                        var totalPrice = 0, displayTotal = {};
+
+                        getUniqCartRecords.forEach(function (obj, indx) {
+                            totalPrice += +(parseFloat(getUniqCartRecords[indx]['price']).toFixed(2));
                         });
 
-                        console.info(getUniqCartRecords);
+//                        console.log('total price value', totalPrice);
 
-                        //update cart data list
-                        vm.cartDataList(getUniqCartRecords);
+                        displayTotal = {
+                            amt: ko.observable(totalPrice.toFixed(2)),
+                            cur: cVM.cartData()[0].currency_symbol
+                        };
 
-                        //update cart count based on number of items in cart
-                        rootVM.cartCount(getUniqCartRecords.length);
+                        return displayTotal;
+                    });
 
-                        //calculate cart total
-                        vm.cartTotal = ko.computed(function () {
-                            var totalPrice = 0, displayTotal = {};
+                }
 
-                            getUniqCartRecords.forEach(function (obj, indx) {
-                                totalPrice += +(parseFloat(getUniqCartRecords[indx]['price']).toFixed(2));
-                            });
+                function incrementQty(curData) {
 
-                            console.log('total price value', totalPrice);
+                    //increment qty value
+                    curData.qty(curData.qty() + 1);
 
-                            displayTotal = {
-                                amt: ko.observable(totalPrice.toFixed(2)),
-                                cur: rootVM.cartData()[0].currency_symbol
-                            };
+                    //add currentRecord to root cartData object if qty incremented
+                    cVM.cartData.push(curData);
 
-                            return displayTotal;
-                        });
+                    console.log(cVM.cartData());
 
-                    }
+                    //prepare subtotal based on quantity added
+                    var subTotalVal = curData.qty() * curData.price;
+                    curData.subTotal(subTotalVal.toFixed(2));
 
-                    function incrementQty(curData) {
-                        
-                        //increment qty value
-                        curData.qty(curData.qty() + 1);
-                        
-                        //add currentRecord to root cartData object if qty incremented
-                        rootVM.cartData.push(curData);
-                        
-                        console.log(rootVM.cartData());
-                        
-                        //prepare subtotal based on quantity added
+                    var totalVal = 0;
+                    getUniqCartRecords.forEach(function (obj, indx) {
+                        totalVal += +obj.subTotal();
+                    });
+
+                    //assign back total value
+                    vm.cartTotal().amt(totalVal.toFixed(2));
+
+                }
+
+                function decrementQty(curData) {
+                    if (curData.qty() > 1) {
+                        curData.qty(curData.qty() - 1);
+
+                        //Removing cartData if product qty decremented
+                        cVM.cartData(_.without(cVM.cartData(), _.findWhere(cVM.cartData(), {
+                            id: curData['id']
+                        })));
+
+                        //decrement product count 
+                        vm.productCounts()[curData['name']] = curData.qty();
+
+
+                        console.log(cVM.cartData());
+
+                        //re-calculating subtotal value
                         var subTotalVal = curData.qty() * curData.price;
                         curData.subTotal(subTotalVal.toFixed(2));
 
+                        //re-calculating total value
                         var totalVal = 0;
                         getUniqCartRecords.forEach(function (obj, indx) {
                             totalVal += +obj.subTotal();
                         });
 
-                        //assign back total value
+                        //finally assigning back to cart total
                         vm.cartTotal().amt(totalVal.toFixed(2));
-
                     }
+                }
 
-                    function decrementQty(curData) {
-                        if (curData.qty() > 1) {
-                            curData.qty(curData.qty() - 1);
-                          
-                            //Removing cartData if product qty decremented
-                            rootVM.cartData(_.without(rootVM.cartData(), _.findWhere(rootVM.cartData(), {
-                                id: curData['id']
-                            })));
-                            
-                            //decrement product count 
-                            vm.productCounts()[curData['name']] = curData.qty();
-                            
-                            
-                            console.log(rootVM.cartData());
+                function cartDialogOKHandle() {
+                    document.querySelector('#cartInfoDialog').close();
+                }
 
-                            //re-calculating subtotal value
-                            var subTotalVal = curData.qty() * curData.price;
-                            curData.subTotal(subTotalVal.toFixed(2));
-                            
-                            //re-calculating total value
-                            var totalVal = 0;
-                            getUniqCartRecords.forEach(function (obj, indx) {
-                                totalVal += +obj.subTotal();
-                            });
-
-                            //finally assigning back to cart total
-                            vm.cartTotal().amt(totalVal.toFixed(2));
-                        }
-                    }
-
-
+                function cartDialogCloseListner() {
+                    cVM.router.go('product');
                 }
 
             }

@@ -6,54 +6,79 @@ and open the template in the editor.
 
 <div id="cartContent" class="oj-web-applayout-content">
     <h1>Your Cart </h1>
+    <oj-dialog class="info-dialog" initial-visibility="hide" style="width: 30vw; height: 35vh;" id="cartInfoDialog" 
+               modality="modal" cancel-behaviour="icon" resize-behavior="none" on-oj-close="[[cartDialogCloseListner]]">
+        <span slot="header" data-bind="text: 'Information'"></span>
+        <div slot="body">
+            <div class="oj-flex">
+                <div class="oj-flex-item text-center">
+                    You were checking out static cart flow. As currently data is not save remotely. 
+                    Thank you for your visit. <br /> Click OK to start again.
+                </div>
+            </div>
+        </div>
 
-    <div class="oj-flex">
-        <div class="oj-flex-item oj-md-12 oj-sm-12">
-            <div class="oj-panel oj-panel-shadow-md">
-                <a href class="oj-flex-item oj-padding pull-right" id="buttonIcon2" data-bind="click: $parent.navigateToView.bind(null, 'product')">
-                    <i class="fa fa-plus-circle"></i> Add more products</a>
+        <div slot="footer" class="text-center oj-dialog-footer">
+            <oj-button class="oj-button-primary" id="okButton" data-bind="click: cartDialogOKHandle"> 
+                OK
+            </oj-button>
+        </div>
+    </oj-dialog>
 
-                <div class="oj-header-border"><h2>Items</h2></div>
+    <!-- ko if: $parent.cartData.length !== 0 -->
+    <!--<span data-bind="text: ko.toJSON($parent.cartData)"></span>-->
+    <!-- /ko -->
+    
+    <div id="cartContainer"style="display:none;">
+        <div class="oj-flex">
+            <div class="oj-flex-item oj-md-12 oj-sm-12">
+                <div class="oj-panel oj-panel-shadow-md">
+                    <a href class="oj-flex-item oj-padding pull-right" id="buttonIcon2" data-bind="click: $parent.navigateToView.bind(null, 'product')">
+                        <i class="fa fa-plus-circle"></i> Add more products</a>
 
-                <table class="oj-table  oj-table-grid-display text-left oj-margin-vertical" width="100%">
-                    <thead class=" oj-table-header">
-                        <tr class="oj-table-header-row">
-                            <th class="oj-table-column-header oj-table-column-header-cell" width="50%"><strong>Product Name</strong></th>
-                            <th class="oj-table-column-header oj-table-column-header-cell"><strong>Ratings</strong></th>
-                            <th class="oj-table-column-header oj-table-column-header-cell text-center" width="8%"><strong>Qty</strong></th>
-                            <th class="oj-table-column-header oj-table-column-header-cell text-right" width="10%"><strong class="oj-padding-end">Price</strong></th>
-                            <th class="oj-table-column-header oj-table-column-header-cell text-right" width="10%"><strong class="oj-padding-end">Sub Total</strong></th>
-                    </thead>
-                    <tbody class="oj-table-body">                
-                        <!-- ko foreach: cartDataList -->
-                        <tr class="oj-table-body-row">                
-                            <td class="oj-table-data-cell"><span class="oj-text-sm oj-padding" data-bind="text: name"></span><div class="text-left oj-padding"><img height="100" class="img" data-bind="attr: {src: thumb_image}" /></div></td>
-                            <td class="oj-table-data-cell"><oj-rating-gauge style="width:70px; height:20px;" value="[[ratings]]" readonly></oj-rating-gauge></td>
-                    <td class="oj-table-data-cell text-center cart-qty-links"><a href="javascript:void(0)" data-bind="click: $parent.decrementQty"><i class="fa fa-minus"></i></a> <input style="width:25px;" type="text" name="txtCartQty" class="oj-sm-12 oj-md-12 text-center" data-bind="value: qty" /> <a href="javascript:void(0)" data-bind="click: $parent.incrementQty"><i class="fa fa-plus"></i></a> </td>               
-                    <td class="oj-table-data-cell text-right"><span data-bind="text: currency_symbol+''+price"></span></td>
-                    <td class="oj-table-data-cell text-right"><span class="oj-padding-end" data-bind="text: currency_symbol+''+subTotal()"></span></td>
-                    </tr>
-                    <!-- /ko -->
-                    </tbody>
-                    <tfoot class="oj-table-footer">
-                        <tr class="oj-table-footer-row">
-                            <td class="oj-table-footer-cell text-right" colspan="4"><strong>Total:</strong></td>
-                            <td class="oj-table-footer-cell text-right"><span class="oj-padding-end" data-bind="text: cartTotal().cur+''+cartTotal().amt() "></span></td>
+                    <div class="oj-header-border"><h2>Items</h2></div>
+
+                    <table class="oj-table  oj-table-grid-display text-left oj-margin-vertical" width="100%">
+                        <thead class=" oj-table-header">
+                            <tr class="oj-table-header-row">
+                                <th class="oj-table-column-header oj-table-column-header-cell" width="50%"><strong>Product Name</strong></th>
+                                <th class="oj-table-column-header oj-table-column-header-cell"><strong>Ratings</strong></th>
+                                <th class="oj-table-column-header oj-table-column-header-cell text-center" width="8%"><strong>Qty</strong></th>
+                                <th class="oj-table-column-header oj-table-column-header-cell text-right" width="10%"><strong class="oj-padding-end">Price</strong></th>
+                                <th class="oj-table-column-header oj-table-column-header-cell text-right" width="10%"><strong class="oj-padding-end">Sub Total</strong></th>
+                        </thead>
+                        <tbody class="oj-table-body">                
+                            <!-- ko foreach: cartDataList -->
+                            <tr class="oj-table-body-row">                
+                                <td class="oj-table-data-cell"><span class="oj-text-sm oj-padding" data-bind="text: name"></span><div class="text-left oj-padding"><img height="100" class="img" data-bind="attr: {src: thumb_image}" /></div></td>
+                                <td class="oj-table-data-cell"><oj-rating-gauge style="width:70px; height:20px;" value="[[ratings]]" readonly></oj-rating-gauge></td>
+                        <td class="oj-table-data-cell text-center cart-qty-links"><a href="javascript:void(0)" data-bind="click: $parent.decrementQty"><i class="fa fa-minus"></i></a> <input style="width:25px;" type="text" name="txtCartQty" class="oj-sm-12 oj-md-12 text-center" data-bind="value: qty" /> <a href="javascript:void(0)" data-bind="click: $parent.incrementQty"><i class="fa fa-plus"></i></a> </td>               
+                        <td class="oj-table-data-cell text-right"><span data-bind="text: currency_symbol+''+price"></span></td>
+                        <td class="oj-table-data-cell text-right"><span class="oj-padding-end" data-bind="text: currency_symbol+''+subTotal()"></span></td>
                         </tr>
-                    </tfoot>
-                </table>
+                        <!-- /ko -->
+                        </tbody>
+                        <tfoot class="oj-table-footer">
+                            <tr class="oj-table-footer-row">
+                                <td class="oj-table-footer-cell text-right" colspan="4"><strong>Total:</strong></td>
+                                <td class="oj-table-footer-cell text-right"><span class="oj-padding-end" data-bind="text: cartTotal().cur+''+cartTotal().amt() "></span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
 
-            </div> <!-- /oj-panel end -->
+                </div> <!-- /oj-panel end -->
 
+            </div>
+        </div>
+
+        <div class="oj-panel oj-panel-shadow-md oj-margin-vertical">
+            <div class="oj-flex">
+                <div class="oj-flex-item oj-flex-items-pad text-right">
+                    <oj-button class="oj-button-lg oj-button-confirm">Proceed to Checkout</oj-button>
+                </div>
+            </div>        
         </div>
     </div>
 
-    <div class="oj-panel oj-panel-shadow-md oj-margin-vertical">
-        <div class="oj-flex">
-            <div class="oj-flex-item oj-flex-items-pad text-right">
-                <oj-button class="oj-button-lg oj-button-confirm">Proceed to Checkout</oj-button>
-            </div>
-        </div>        
-    </div>
 </div>
 

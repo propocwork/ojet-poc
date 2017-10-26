@@ -5,13 +5,13 @@
 /*
  * Your dashboard ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'viewModels/cart',
+define(['ojs/ojcore', 'knockout', 'jquery', 'underscore',
     'ojs/ojknockout',
     'ojs/ojlistview',
     'ojs/ojbutton',
     'ojs/ojgauge',
     'ojs/ojarraytabledatasource'],
-        function (oj, ko, $, _,cart) {
+        function (oj, ko, $, _) {
 
             function ProductViewModel(params) {
                 
