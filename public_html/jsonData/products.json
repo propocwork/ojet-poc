@@ -28,4 +28,24 @@
         "currency_symbol": "$",
         "color": "grey",
         "ratings": "3.78"
+    },
+    {    
+        "id": "1",
+        "name": "Men's Levis 550",
+        "thumb_image": "images/jeans-thumb1.png",
+        "description": "Updated original. These jeans have the same quality and craftsmanship as the original 501 style, but with more room in the seat and thigh.",
+        "price": "46.5",
+        "currency_symbol": "$",
+        "color": "navy blue",
+        "ratings": "2.88"
+    },
+    {
+        "id": "2",
+        "name": "Men's Levi's 560 Comfort Fit Jeans",
+        "thumb_image": "images/jeans-thumb2.png",
+        "description": "Keep tabs on comfort and style ... with these dependable jeans. So classic, you'll want to wear them with everything!",
+        "price": "36.99",
+        "currency_symbol": "$",
+        "color": "black",
+        "ratings": "3.29"
     }]

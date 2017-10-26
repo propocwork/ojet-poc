@@ -4,7 +4,7 @@
 -->
 <div class="oj-hybrid-padding" id="productPageContent">
     <div id="listviewContainer" >
-        <h1>Products</h1>   
+        <h1>Apparels</h1>   
 
         <div  id="productListView" role="main" class="oj-component">
             <oj-list-view id="listview" 
@@ -19,10 +19,10 @@
         <script type="text/html" id="item_template">
             <li>                
                 <a href="#" data-bind="click: $parent.goToProductDetail">
-                    <img data-bind="attr: {src: thumb_image}" width="100%" alt="thumbnail image" />
+                    <p class="text-center"><img data-bind="attr: {src: thumb_image}" width="85%" alt="thumbnail image" /></p>
                     <strong data-bind="text: name"></strong>
                 </a>
-
+                <oj-rating-gauge class="oj-flex-item oj-flex-bar oj-flex-bar-start" style="display:inline-block; height: 16px;" value="[[parseInt(ratings)]]" readonly></oj-rating-gauge>
                 <h3 class="bold" data-bind="text: currency_symbol+price"></h3>
             </li>
             </script>

@@ -51,11 +51,29 @@ a:focus{outline:none;}
 
 
 /* Main layout styles*/
+.oj-web-applayout-header {
+    background-color: #170627;
+}
+.oj-web-applayout-header h1{
+    margin-top: 20px;
+    line-height: normal;
+    margin-bottom: 0;
+}
+.oj-web-applayout-header h1 a{
+    color:#fff;
+    text-decoration: none;
+}
+.oj-navigationlist-app-level.oj-navigationlist-horizontal .oj-navigationlist-item:not(.oj-disabled) a.oj-navigationlist-item-content>.oj-navigationlist-item-label {
+    color: #fff;
+}
+
 .oj-web-applayout-content {
     padding-bottom: 40px;
 }
 .oj-web-applayout-footer {
     position: fixed;
+    background-color: #170627;
+    color:#fff;
     bottom:0;
     width:100%;
     min-height: 30px;
