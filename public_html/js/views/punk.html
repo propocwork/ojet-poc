@@ -26,11 +26,9 @@ and open the template in the editor.
     <div id="masonryLayout" class="oj-flex" data-bind="template: {name: 'beerTemplate', foreach:beers}"></div>
 
     <script type="text/html" id="beerTemplate">
-        <a href data-bind="click: $parent.openBeerDetailView">
-            <div class="oj-panel oj-flex-item plunk-bottles text-center">
-                <strong class="clearfix" data-bind="text: name"></strong>
-                <img data-bind="attr: {src: image_url, alt: name}" width="100" class="img" />
-            </div>
+        <a href data-bind="click: $parent.openBeerDetailView" class="oj-panel oj-flex-item plunk-bottles text-center">
+            <strong class="clearfix" data-bind="text: name"></strong>
+            <img data-bind="attr: {src: image_url, alt: name}" width="100" class="img" />
         </a>
     </script>
     
