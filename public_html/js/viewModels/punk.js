@@ -29,7 +29,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'services/punkService'
                 vm.searchValue = ko.observable('');
                 vm.handleOKClose = handleOKClose;
                 vm.openBeerDetailView = openBeerDetailView;
-                vm.dialogDetails = ko.observable("");
+                vm.beerDetails = ko.observable("");
 
 
                 var loaderInterval = setInterval(function () {
@@ -40,14 +40,15 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'services/punkService'
         
                 //service request to fetch the punk data                
                 pServiceInstance.fetchBeers.then(function (data) {
-                    console.log('success');
+                    console.log('promise resolved');
                     clearInterval(loaderInterval);
                     vm.progressValue(100);
                     vm.loaderFlag(false);
                     vm.promiseFailed(false);
-
-
+                    
                     if (data) {
+                        
+                        console.log(data);
                         
                         bArray = data;
                         
@@ -57,9 +58,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'services/punkService'
                     }
 
                 }).fail(function(err){
-                    
-                    console.log(err);
-                    
+                                        
                     vm.loaderFlag(false);
                     vm.promiseFailed(true);
 
@@ -108,7 +107,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'services/punkService'
                 //Detail view definiation to show detail                
                 function openBeerDetailView(curItem){
                     console.log(curItem);
-                    vm.dialogDetails(curItem);
+                    vm.beerDetails(curItem);
                     document.querySelector('#punkDetailDialog').open();
                 }
                 
