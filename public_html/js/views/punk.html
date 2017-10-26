@@ -26,23 +26,61 @@ and open the template in the editor.
     <div id="masonryLayout" class="oj-flex" data-bind="template: {name: 'beerTemplate', foreach:beers}"></div>
 
     <script type="text/html" id="beerTemplate">
-        <a href data-bind="click: $parent.openBeerDetailView">
-            <div class="oj-panel oj-flex-item plunk-bottles text-center">
+        <a href data-bind="click: $parent.openBeerDetailView" class="oj-panel oj-flex-item plunk-bottles text-center">
                 <strong class="clearfix" data-bind="text: name"></strong>
                 <img data-bind="attr: {src: image_url, alt: name}" width="100" class="img" />
-            </div>
         </a>
     </script>
     
     <div id="dialogWrapper">
-        <oj-dialog style="display:none;width: 50vw; height: 50vh;" id="punkDetailDialog" 
-                   title="" modality="modal">
-            <span slot="header" data-bind="text: dialogDetails().name"></span>
+        <oj-dialog initial-visibility="hide" style="width: 50vw; height: 50vh;" id="punkDetailDialog" 
+                   title="" modality="modal" cancel-behaviour="icon" resize-behavior="none">
+            <span slot="header" data-bind="text: beerDetails().name + ' - ' + beerDetails().tagline"></span>
             <div slot="body">
                 <div class="oj-flex">
-                    <div class="oj-flex-item oj-md-10"></div>
-                    <div class="oj-flex-item oj-md-2">
-                        <img data-bind="attr: {src: dialogDetails().image_url}"/>
+                    <div class="oj-flex-item oj-md-9">
+                        <div class="oj-flexn oj-margin-vertical">
+                            <div class="oj-flex-item"><span class="oj-flex-item" data-bind="text: beerDetails().description"></span></div>
+                        </div>
+                        
+                        <div class="oj-flex oj-margin-bottom">
+                            <div class="oj-flex-item"><strong>First Brewed:</strong> <span class="oj-flex-item" data-bind="text: beerDetails().first_brewed"></span></div>
+                        </div>
+                        <div class="oj-flex oj-margin-bottom">
+                            <div class="oj-flex-item"><strong>Attenuation Level:</strong> <span class="oj-flex-item" data-bind="text: beerDetails().attenuation_level"></span></div>
+                        </div>
+                        <div class="oj-flex oj-margin-bottom">
+                            <div class="oj-flex-item"><strong>EBC</strong> <span class="oj-flex-item" data-bind="text: beerDetails().ebc"></span></div>
+                        </div>
+                        <div class="oj-flex oj-margin-bottom">
+                            <div class="oj-flex-item"><strong>pH:</strong> <span class="oj-flex-item" data-bind="text: beerDetails().ph"></span></div>
+                        </div>
+                        <div class="oj-flex oj-margin-bottom">
+                            <div class="oj-flex-item"><strong>SRM:</strong> <span class="oj-flex-item" data-bind="text: beerDetails().srm"></span></div>
+                        </div>
+                        <div class="oj-flex oj-margin-bottom">
+                            <div class="oj-flex-item"><strong>Volume:</strong>                                 
+                                <!-- ko with: beerDetails().volume -->
+                                    <span class="oj-flex-item" data-bind="text: value +' '+unit"></span>
+                                <!-- /ko -->                                
+                            </div>
+                        </div>
+                        <div class="oj-flex oj-margin-bottom">
+                            <div class="oj-flex-item"><strong>Food Pairing:</strong> 
+                                <!-- ko foreach: beerDetails().food_pairing -->
+                                    <span class="oj-flex-item" data-bind="text: $data"></span>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                        <div class="oj-flex oj-margin-bottom">
+                            <div class="oj-flex-item"><strong>Brewers Tips:</strong> <span class="oj-flex-item" data-bind="text: beerDetails().brewers_tips"></span></div>
+                        </div>
+                        <div class="oj-flex oj-margin-bottom">
+                            <div class="oj-flex-item"><strong>Contributed By:</strong> <span class="oj-flex-item" data-bind="text: beerDetails().contributed_by"></span></div>
+                        </div>                        
+                    </div>
+                    <div class="oj-flex-item oj-md-3 text-center">
+                        <img data-bind="attr: {src: beerDetails().image_url}" height="200vh" />
                     </div>
                 </div>
             </div>
