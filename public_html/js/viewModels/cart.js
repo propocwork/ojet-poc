@@ -83,11 +83,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'appController', 'view
                             totalPrice += +(parseFloat(getUniqCartRecords[indx]['price']).toFixed(2));
                         });
 
-//                        console.log('total price value', totalPrice);
+                        console.log('cart data', cVM.cartData()[0]);
 
                         displayTotal = {
                             amt: ko.observable(totalPrice.toFixed(2)),
-                            cur: cVM.cartData()[0].currency_symbol
+                            cur: '$' //cVM.cartData()[0].currency_symbol
                         };
 
                         return displayTotal;
@@ -123,7 +123,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'appController', 'view
                     if (curData.qty() > 1) {
                         curData.qty(curData.qty() - 1);
 
-                        //Removing cartData if product qty decremented
+                        //Removing cartData if product qty decremented but it should remove one item per decreement not all
+                        //need to fix this - Jat - 27-10-17
                         cVM.cartData(_.without(cVM.cartData(), _.findWhere(cVM.cartData(), {
                             id: curData['id']
                         })));
@@ -151,6 +152,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'appController', 'view
 
                 function cartDialogOKHandle() {
                     document.querySelector('#cartInfoDialog').close();
+                    cVM.cartCount(0);
                 }
 
                 function cartDialogCloseListner() {
