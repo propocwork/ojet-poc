@@ -94,7 +94,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'services/punkService'
                         $.each(bArray, function (idx, obj) {
                             if (obj['name'].toLowerCase().indexOf(value.toLowerCase()) >= 0) {
                                 //console.log('Beer found!',bArray[x]);
-                                vm.beers(obj);
+                                vm.beers.push(obj);
                             }
                         });
 
