@@ -42,7 +42,7 @@ define(['ojs/ojcore', 'knockout', 'jquery',
             console.log('Local data not found, fetching it from server ');
 
             vm.fetchBeers = $.ajax({
-                url: 'https://api.punkapi.com/v2/beers?page=2&per_page=3',
+                url: 'https://api.punkapi.com/v2/beers?page=2&per_page=25',
                 success: function (resp) {     
                     window.localStorage.setItem('punkData', JSON.stringify(resp));
                     return resp;
