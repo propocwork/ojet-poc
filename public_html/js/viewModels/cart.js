@@ -121,13 +121,18 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'appController', 'view
 
                 function decrementQty(curData) {
                     if (curData.qty() > 1) {
+                        
+                        console.info(curData);
+                        
                         curData.qty(curData.qty() - 1);
-
+                        
+                        cVM.cartData().pop();
+                        
                         //Removing cartData if product qty decremented but it should remove one item per decreement not all
                         //need to fix this - Jat - 27-10-17
-                        cVM.cartData(_.without(cVM.cartData(), _.findWhere(cVM.cartData(), {
-                            id: curData['id']
-                        })));
+//                        cVM.cartData(_.without(cVM.cartData(), _.findWhere(cVM.cartData(), {
+//                            id: curData['id']
+//                        })));
 
                         //decrement product count 
                         vm.productCounts()[curData['name']] = curData.qty();

@@ -1,8 +1,22 @@
 {
-    "name": "OJetAppPoc",
-    "version": "1.0.0",
-    "keywords": ["util", "functional", "server", "client", "browser"],
-    "author": "Admin",
-    "contributors": [],
-    "dependencies": {}
+  "name": "OJetAppPoc",
+  "version": "1.0.0",
+  "keywords": [
+    "util",
+    "functional",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "Admin",
+  "contributors": [],
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine-core": "^2.8.0",
+    "karma": "^1.7.1",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-requirejs": "^1.1.0",
+    "requirejs": "^2.3.5"
+  }
 }

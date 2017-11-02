@@ -7,15 +7,16 @@
 /**
  * header module
  */
-define(['ojs/ojcore', 'knockout', 'ojs/ojoffcanvas', 'ojs/ojnavigationlist', 'ojs/ojbutton', 'ojs/ojarraytabledatasource'
-], function (oj, ko) {
+define(['ojs/ojcore', 'knockout','appController', 'ojs/ojoffcanvas', 'ojs/ojnavigationlist', 'ojs/ojbutton', 'ojs/ojarraytabledatasource'
+], function (oj, ko, appCtrl) {
     /**
      * The view model for the main content view template
      */
     function headerContentViewModel() {
         var self = this;
-        var rootVM = ko.dataFor(document.getElementById('pageContent'));
-
+        
+        var rootVM = appCtrl; //ko.dataFor(document.getElementById('pageContent'));
+               
         self.cartItemsCount = ko.observable(rootVM.cartCount());
 
         self.cartItemsCount = ko.computed(function () {
@@ -61,9 +62,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojoffcanvas', 'ojs/ojnavigationlist', 'oj
 
         // Navigation setup
         var navData = [
-            {name: 'Punk beer', id: 'punk', iconClass: 'oj-navigationlist-item-icon'},
-            {name: 'Apparels', id: 'product', iconClass: 'oj-navigationlist-item-icon'},
-            {name: 'About', id: 'about', iconClass: 'oj-navigationlist-item-icon'}
+            {name: 'Home', id: 'dashboard', iconClass: 'fa fa-home oj-navigationlist-item-icon'},
+            {name: 'Punk beer', id: 'punk', iconClass: 'fa fa-glass oj-navigationlist-item-icon'},
+            {name: 'Apparels', id: 'product', iconClass: 'fa fa-shirtsinbulk oj-navigationlist-item-icon'},
+            {name: 'About', id: 'about', iconClass: 'fa fa-picture-o oj-navigationlist-item-icon'}
         ];
         self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
 

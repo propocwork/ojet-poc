@@ -5,13 +5,13 @@
 /*
  * Your dashboard ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'underscore',
+define(['ojs/ojcore', 'knockout', 'jquery', 'underscore', 'appController',
     'ojs/ojknockout',
     'ojs/ojlistview',
     'ojs/ojbutton',
     'ojs/ojgauge',
     'ojs/ojarraytabledatasource'],
-        function (oj, ko, $, _) {
+        function (oj, ko, $, _, appCtrl) {
 
             function ProductViewModel(params) {
                 
@@ -19,7 +19,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'underscore',
                 
                 var vm = this;
                 var rootVM = ko.dataFor(document.getElementById('pageContent'));
-
+                
+                console.log(rootVM);
+                
                 vm.addedToCartFlag = ko.observable(false);
                 vm.dataSource = ko.observable();
                 vm.goToProductList = goToProductList;

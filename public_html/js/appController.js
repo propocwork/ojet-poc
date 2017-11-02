@@ -13,10 +13,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
                 // Router setup
                 self.router = oj.Router.rootInstance;
                 self.router.configure({
-                    'punk': {label: 'Punk', isDefault: true},
+                    'punk': {label: 'Punk'},
                     'product': {label: 'Product'},
                     'about': {label: 'About'},
-                    'cart': {label: 'Cart'}
+                    'cart': {label: 'Cart'},
+                    'dashboard': {label: 'Dashboard',isDefault: true}
                 });
                 oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
 
@@ -33,8 +34,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
                         //redirecto to route
                         self.router.go(url);
                     }
-                    
-                    
                 }
                 
                 // Footer
